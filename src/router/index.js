@@ -1,22 +1,53 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
+const Home = () => import('@/views/Home/Home.vue')
+const TagPage = () => import('@/views/TagPage/TagPage.vue')
+const TipPage = ()=> import('@/views/TipPage/TipPage.vue')
+const DemoPage = ()=> import('@/views/DemoPage/DemoPage.vue')
+const Board = ()=>import('@/views/Board/Board.vue')
+const About = ()=>import('@/views/About/About.vue')
+const AddArticle = ()=>import('@/views/AddArticle/AddArticle.vue')
+const Article = ()=>import('@/views/Article/Article.vue')
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
-    path: '/',
+    path:'/',
+    redirect:'/addArticle'
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/tagPage',
+    component: TagPage
+  },
+  {
+    path:'/tipPage',
+    component: TipPage
+  },
+  {
+    path:'/demoPage',
+    component: DemoPage
+  },
+  {
+    path:'/Board',
+    component: Board
+  },
+  {
+  path:'/about',
+    component:About
+  },
+  {
+    path:'/addArticle',
+    component: AddArticle
+  },
+  {
+    path:'/article',
+    component: Article
   }
 ]
 

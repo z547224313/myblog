@@ -1,32 +1,87 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <NavBar class="navbar" :class="{'navbar-hidden':isShowNavbar}"/>
+      <TopBar class="topbar" :class="{'topbar-full':isShowNavbar}"/>
+      <div class="main-wrapper" :class="{'main-wrapper-full':isShowNavbar}">
+        <div class="main">
+          <router-view/>
+        </div>
+      </div>
   </div>
 </template>
+<script>
+  import TopBar from "./components/Topbar/TopBar";
+  import NavBar from "./components/Navbar/NavBar";
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  export default {
+    name: 'app',
+    components: {
+      NavBar,
+      TopBar
+    },
+    data(){
+      return{
+        isShowNavbar:false
+      }
+    },
+    mounted() {
+      this.$bus.$on('showNavbar',this.ShowNavbar)
+    },
+    methods:{
+      ShowNavbar(){
+        this.isShowNavbar = !this.isShowNavbar
+      }
+    }
 
-#nav {
-  padding: 30px;
-}
+  }
+</script>
+<style lang="less">
+  @import "~normalize.css";
+  body{
+    background-color: lightseagreen;
+    overflow-x: hidden;
+  }
+  #app {
+   .main-wrapper{
+     transition: all 0.5s;
+     position: absolute;
+     left: 200px;
+     top: 78px;
+     width: calc(1366px - 200px);
+     .main{
+       width: 1000px;
+       margin: 0 auto;
+     }
+   }
+    width: 100%;
+    height: 100%;
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  }
+  @media only screen and (max-width:1200px){
+    .navbar{
+      left:-200px !important;
+      transition: all 0.5s;
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+    }
+    .main-wrapper{
+      left:0 !important;
+    }
+    .topbar{
+      width: 100% !important;
+      transition: all 0.5s;
+    }
+  }
+  .navbar-hidden{
+    left: -200px !important;
+  }
+  .topbar-full{
+    width: 100% !important;
+  }
+  .main-wrapper-full{
+    margin-left:auto;
+    margin-right:auto;
+    left:0 !important;/* 必须设置left\right否则会调整left right*/
+    right:0 !important;
+
+  }
 </style>
